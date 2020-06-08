@@ -96,6 +96,9 @@ func Run(ctx context.Context, config Config) error {
 				err.ExpectedHash,
 			)
 		}
+		if err, ok := err.(*migration.MissingStatementError); ok {
+			return fmt.Errorf("Database already applied %d, but only %d files provided", err.Needed, len(statements))
+		}
 		return errors.Wrap(err)
 	}
 

@@ -9,5 +9,5 @@ github.com/lib/pq v1.7.0 h1:h93mCPfUSkaul3Ka/VG8uZdmW1uMHDGxzu0NWHuJmHY=
 github.com/lib/pq v1.7.0/go.mod h1:AlVN5x4E4T544tWzH6hKfbfQvm3HdbOxrmggDNAPY9o=
 github.com/payfazz/go-errors v0.0.0-20200603234254-cfd1018c0441 h1:44XMxTLZGKVrrrYp+FKD0HfbsLsrcebI4/RpAtOSw4s=
 github.com/payfazz/go-errors v0.0.0-20200603234254-cfd1018c0441/go.mod h1:o9dYtN6JBrBzwiG1Mtr2P2Urbm4wOQ1HG+AWhyYcKNI=
-github.com/payfazz/psql-migration v0.0.0-20200608232226-e8e946ad77c0 h1:l8OEa9Ec43L0Z96sU90JWBzyBng09/B/FUk9t19xFy4=
-github.com/payfazz/psql-migration v0.0.0-20200608232226-e8e946ad77c0/go.mod h1:3OHvfImyvia/53H4J9OSXgd2i+cwVn7zSiqIf7bEqVE=
+github.com/payfazz/psql-migration v0.0.0-20200608232844-4e963ddbf59d h1:xo5gO0evwmjUF4kY9jnGysTD/ygz9sEytpx3N5ZOHf4=
+github.com/payfazz/psql-migration v0.0.0-20200608232844-4e963ddbf59d/go.mod h1:3OHvfImyvia/53H4J9OSXgd2i+cwVn7zSiqIf7bEqVE=
