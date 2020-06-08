@@ -7,7 +7,6 @@ import (
 	"io/ioutil"
 	"os"
 	"path/filepath"
-	"sort"
 	"strings"
 
 	"github.com/payfazz/go-errors"
@@ -51,8 +50,6 @@ func Run(ctx context.Context, config Config) error {
 		}
 	}
 
-	sort.Strings(files)
-
 	var statements []string
 
 	for _, f := range files {
@@ -66,10 +63,6 @@ func Run(ctx context.Context, config Config) error {
 	db, err := sql.Open("postgres", config.Conn)
 	if err != nil {
 		return errors.NewWithCause("Cannot open database", err)
-	}
-	err = db.PingContext(ctx)
-	if err != nil {
-		return errors.NewWithCause("Cannot ping database", err)
 	}
 
 	if config.DryRun {
@@ -86,19 +79,20 @@ func Run(ctx context.Context, config Config) error {
 			)
 		}
 		if err, ok := err.(*migration.HashError); ok {
+			if err.StatementHash == "" {
+				return fmt.Errorf("Error parsing '%s'", files[err.StatementIndex])
+			}
+
 			if !config.Verbose {
 				return fmt.Errorf("hash for file '%s' does't match with database", files[err.StatementIndex])
 			}
 
 			return fmt.Errorf(""+
-				"hash for file '%s' does't match with database\n\n"+
-				"normalized statement:\n"+
-				"%s\n\n"+
+				"hash for file '%s' does't match with database\n"+
 				"computed hash    : %s\n"+
 				"hash on database : %s",
 				files[err.StatementIndex],
-				err.NormalizeStatement,
-				err.ComputedHash,
+				err.StatementHash,
 				err.ExpectedHash,
 			)
 		}
