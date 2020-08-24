@@ -9,7 +9,6 @@ import (
 	"path/filepath"
 	"strconv"
 
-	_ "github.com/lib/pq"
 	"github.com/payfazz/go-errors"
 	migrationcmd "github.com/payfazz/psql-migration-cmd/pkg/psql-migration"
 )

@@ -7,8 +7,10 @@ import (
 	"io/ioutil"
 	"os"
 	"path/filepath"
+	"sort"
 	"strings"
 
+	_ "github.com/lib/pq"
 	"github.com/payfazz/go-errors"
 	migration "github.com/payfazz/psql-migration"
 )
@@ -34,6 +36,10 @@ func Run(ctx context.Context, config Config) error {
 
 	appID := strings.TrimSpace(string(data))
 
+	if appID == "" {
+		return fmt.Errorf("file %s is empty", appIDFile)
+	}
+
 	allFiles, err := ioutil.ReadDir(config.Dir)
 	if err != nil {
 		return errors.Wrap(err)
@@ -49,6 +55,8 @@ func Run(ctx context.Context, config Config) error {
 			files = append(files, info.Name())
 		}
 	}
+
+	sort.Strings(files)
 
 	var statements []string
 
@@ -97,7 +105,7 @@ func Run(ctx context.Context, config Config) error {
 			)
 		}
 		if err, ok := err.(*migration.MissingStatementError); ok {
-			return fmt.Errorf("Database already applied %d, but only %d files provided", err.Needed, len(statements))
+			return fmt.Errorf("Database already applied %d migration statement, but only %d files provided", err.Needed, len(statements))
 		}
 		return errors.Wrap(err)
 	}
